@@ -23,6 +23,7 @@ void font_desc_free(FontDesc *font_desc) {
     ren_free_font(font_desc->cache[i].font);
   }
   font_desc->cache_length = 0;
+  font_desc->cache_last_index = 0;
 }
 
 void font_desc_set_tab_size(FontDesc *font_desc, int tab_size) {
