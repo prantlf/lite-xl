@@ -45,18 +45,19 @@ local function set_scale(scale)
     end
   end
 
-  current_scale = scale
+  local rel_s = scale / current_scale
   local s = scale / default.scale
+  current_scale = scale
 
   if config.scale_mode == "ui" then
     SCALE = scale
 
-    style.padding.x      = style.padding.x      * s
-    style.padding.y      = style.padding.y      * s
-    style.divider_size   = style.divider_size   * s
-    style.scrollbar_size = style.scrollbar_size * s
-    style.caret_width    = style.caret_width    * s
-    style.tab_width      = style.tab_width      * s
+    style.padding.x      = style.padding.x      * rel_s
+    style.padding.y      = style.padding.y      * rel_s
+    style.divider_size   = style.divider_size   * rel_s
+    style.scrollbar_size = style.scrollbar_size * rel_s
+    style.caret_width    = style.caret_width    * rel_s
+    style.tab_width      = style.tab_width      * rel_s
 
     for _, name in ipairs(font_styles) do
       renderer.font.set_size(style[name], s * default.font_size[name])
