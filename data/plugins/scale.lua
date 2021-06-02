@@ -13,23 +13,11 @@ config.scale_use_mousewheel = true
 
 local font_styles = {"font", "big_font", "icon_font", "icon_big_font", "code_font"}
 
-local function get_styles_font_size()
-  local font_size = {}
-  for _, name in ipairs(font_styles) do
-    font_size[name] = renderer.font.get_size(style[name])
-  end
-  return font_size
-end
-
 local scale_level = 0
 local scale_steps = 0.1
 
 local current_scale = SCALE
-
-local default = {
-  scale = SCALE,
-  font_size = get_styles_font_size()
-}
+local default_scale = SCALE
 
 local function get_scale() return current_scale end
 
@@ -45,25 +33,24 @@ local function set_scale(scale)
     end
   end
 
-  local rel_s = scale / current_scale
-  local s = scale / default.scale
+  local s = scale / current_scale
   current_scale = scale
 
   if config.scale_mode == "ui" then
     SCALE = scale
 
-    style.padding.x      = style.padding.x      * rel_s
-    style.padding.y      = style.padding.y      * rel_s
-    style.divider_size   = style.divider_size   * rel_s
-    style.scrollbar_size = style.scrollbar_size * rel_s
-    style.caret_width    = style.caret_width    * rel_s
-    style.tab_width      = style.tab_width      * rel_s
+    style.padding.x      = style.padding.x      * s
+    style.padding.y      = style.padding.y      * s
+    style.divider_size   = style.divider_size   * s
+    style.scrollbar_size = style.scrollbar_size * s
+    style.caret_width    = style.caret_width    * s
+    style.tab_width      = style.tab_width      * s
 
     for _, name in ipairs(font_styles) do
-      renderer.font.set_size(style[name], s * default.font_size[name])
+      renderer.font.set_size(style[name], s * style[name]:get_size())
     end
   else
-    renderer.font.set_size(style.code_font, s * default.font_size.code_font)
+    renderer.font.set_size(style.code_font, s * style.code_font:get_size())
   end
 
   -- restore scroll positions
@@ -89,17 +76,17 @@ end
 
 local function res_scale()
     scale_level = 0
-    set_scale(default.scale)
+    set_scale(default_scale)
 end
 
 local function inc_scale()
     scale_level = scale_level + 1
-    set_scale(default.scale + scale_level * scale_steps)
+    set_scale(default_scale + scale_level * scale_steps)
 end
 
 local function dec_scale()
     scale_level = scale_level - 1
-    set_scale(default.scale + scale_level * scale_steps)
+    set_scale(default_scale + scale_level * scale_steps)
 end
 
 
