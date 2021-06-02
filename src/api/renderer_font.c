@@ -65,7 +65,7 @@ static int f_set_tab_size(lua_State *L) {
 
 static int f_gc(lua_State *L) {
   FontDesc *self = luaL_checkudata(L, 1, API_TYPE_FONT);
-  font_desc_free(self);
+  font_desc_clear(self);
   return 0;
 }
 
@@ -114,7 +114,7 @@ static int f_get_size(lua_State *L) {
 static int f_set_size(lua_State *L) {
   FontDesc *self = luaL_checkudata(L, 1, API_TYPE_FONT);
   float new_size = luaL_checknumber(L, 2);
-  font_desc_free(self);
+  font_desc_clear(self);
   self->size = new_size;
   return 0;
 }
