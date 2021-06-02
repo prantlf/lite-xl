@@ -14,7 +14,7 @@ config.scale_use_mousewheel = true
 local font_styles = {"font", "big_font", "icon_font", "icon_big_font", "code_font"}
 
 local scale_level = 0
-local scale_steps = 0.1
+local scale_steps = 0.05
 
 local current_scale = SCALE
 local default_scale = SCALE
