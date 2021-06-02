@@ -114,10 +114,8 @@ static int f_get_size(lua_State *L) {
 static int f_set_size(lua_State *L) {
   FontDesc *self = luaL_checkudata(L, 1, API_TYPE_FONT);
   float new_size = luaL_checknumber(L, 2);
-  if (fabs(new_size - self->size) > 1e-4) {
-    font_desc_free(self);
-    self->size = new_size;
-  }
+  font_desc_free(self);
+  self->size = new_size;
   return 0;
 }
 
